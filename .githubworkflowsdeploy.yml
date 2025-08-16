@@ -1,0 +1,25 @@
+name: Deploy to Firebase Hosting
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build the app
+        run: npm run build
+        
+      - name: Deploy to Firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.FIREBASE_TOKEN }}
+          projectId: mytopseries-f4940
+          target: live
